@@ -23,7 +23,6 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 session
 mquandalle:stylus
 accounts-ui
-accounts-facebook
-accounts-twitter
 accounts-google
 accounts-github
+accounts-password
