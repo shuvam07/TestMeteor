@@ -6,26 +6,45 @@ import './main.html';
 
 Template.body.helpers({
    resolutions: function(){
-   	// console.log(Resolutions);
-   	return Resolutions.find({});
-   	// console.log(resss);
-   	// return resss;
+   	if(Session.get('hideFinished')){
+   		return Resolutions.find({checked:{$ne: true}});
+   	}
+   	else{
+   		return Resolutions.find();
+   	}
+   },
+   hideFinished: function(){
+   	 return Session.get('hideFinished');
    }
 });
 
 Template.body.events({
 	'submit .new-resolution': function(event){
 		var title=event.target.title.value;
+		if (!title){
+			$(this).attr('border-bottom': '1px solid red').focus().blur();
+			return false;
+		}
 		Resolutions.insert({title:title,createdAt: new Date()});
 		event.target.title.value="";
 		return false;
+	},
+	'change .hide-finished':function(event){
+		Session.set('hideFinished',event.target.checked);
 	}
 });
 
 Template.resolution.events({
 	'click .delete':function(){
 		Resolutions.remove(this._id);
+	},
+	'click .toggle-checked': function(){
+		Resolutions.update(this._id,{$set: {checked: !this.checked}});
 	}
+});
+
+Accounts.ui.config({
+	passwordSignupFields: 'USERNAME_ONLY';
 });
 
 

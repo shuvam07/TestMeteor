@@ -6,6 +6,10 @@
     <div class="container">
         <header>
             <h1>Mohtly resolution</h1>
+            <label class="hide-finished">
+                <input type="checkbox" checked="{{hideFinished}}">
+                Hide Finished resolutions
+            </label>
             <form class="new-resolution">
                 <input type="text" name="title" placeholder="A new resolution">
                 <input type="submit" value="submit">
@@ -17,12 +21,13 @@
             {{/each}}
         </ul>
     </div>
-    
+    <p>{{> loginButtons}}</p>
 </body>
 
 <template name="resolution"> 
-  <li>
-    {{title}} 
+  <li class="{{#if checked}}checked{{/if}}">
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" >
+    <span class="text">{{title}}</span>
     <button class="delete">Remove</button>
   </li>
 </template>
